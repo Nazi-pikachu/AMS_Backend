@@ -24,6 +24,11 @@
 
 *<a href = "https://github.com/Nazi-pikachu/AMS_Backend/blob/37693601f4120f3b957b0b4e194e4f68a3311373/AMS.pdf">API endpoints</a>*
 
+#### Backend Architecture:
+ - Current application has a very simple  monolith architecture which is
+   built using django and djano-DRF.
+ - Additionally REST API are created    to interact with the resources.
+
 Possible use of cache/CDN/Load Balancers
 
 CDN : If the application requires some large size images or other resources then CDN can be used for those purpose it will essentially help in
