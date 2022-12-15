@@ -182,6 +182,24 @@ def getAdmin(request):
     return Response(serializer.data)
 
 
+@ api_view(['GET', 'POST'])
+def authAdmin(request):
+    # get all the data from the Admin model
+    username = request.data['userName']
+    password = request.data['password']
+    if Admin.objects.filter(username=username, password=password).exists():
+        print("--------------------Authentication successful-----------------------")
+        return Response({'message': 'Valid credentials', "is": True})
+    else:
+        return Response({'message': 'Invalid credentials', "is": False}, status=status.HTTP_400_BAD_REQUEST)
+
+    # admin = Admin.objects.all()
+    # serialize the data
+    # serializer = AdminSerializer(admin, many=True)
+    # return the data in json format
+    return Response(serializer.data)
+
+
 @ api_view(['POST'])
 def createAdmin(request):
     # serialize the data
