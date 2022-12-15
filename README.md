@@ -14,6 +14,14 @@
  - -Make sure you are in the root directory i.e the same directory as **manage.py**
  - -RUN `py manage.py runserver`
 
+ - [ ] NOTE:
+
+> If running both the frontend and backend on the same machine then make
+> sure to enable CORS **temporarily** to do so
+
+ - Go to the settings file in the AMS directory using `cd AMS`
+ - Add the address in the   `CORS_ALLOWED_ORIGINS = [ 'http://localhost:3001',]`
+
 ### DataBase Diagram
 
 		ADMIN
