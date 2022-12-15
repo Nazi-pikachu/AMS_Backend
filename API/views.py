@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from .serializers import DocSerializer, PatientSerializer, AppointmentSerializer, AdminSerializer
 from .models import Doctor, Patient, Appointment, Admin
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -10,12 +10,6 @@ from rest_framework import generics
 from rest_framework import mixins
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
-
-# Create your views here.
-
-def apiOverview(request):
-    return HttpResponse('API Overview')
 
 
 # create a get method to get all the data from the Doctor model
@@ -27,7 +21,7 @@ def getDoctor(request):
     # serialize the data
     serializer = DocSerializer(doctor, many=True)
     # return the data in json format
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @api_view(['POST'])
@@ -44,7 +38,7 @@ def createDoctor(request):
         # save the data
         serializer.save()
     # return the data in json format
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 @api_view(['PATCH', 'PUT'])
@@ -66,23 +60,32 @@ def updateDoctor(request, pk):
 
 
 @api_view(['GET'])
+# @authentication_classes([BasicAuthentication, TokenAuthentication])
+# @permission_classes([IsAuthenticated])
 def getPatient(request):
     # get all the data from the Patient model
+    print(request.headers)
+    # username = request.headers.get('name')
+    # password = request.headers.get('Password')
+    # print(username, password)
+    # if Admin.objects.filter(username=username, password=password).exists():
     patient = Patient.objects.all()
     # serialize the data
     serializer = PatientSerializer(patient, many=True)
     # return the data in json format
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
+    # else:
+    #     return Response({'message': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
+@ api_view(['POST'])
 def createPatient(request):
     # serialize the data
     serializer = PatientSerializer(data=request.data)
 
     # check if the patient already exists
     if Patient.objects.filter(email=request.data['email']).exists():
-        return JsonResponse({'error': 'Patient already exists'}, safe=False)
+        return Response({'error': 'Patient already exists'})
 
     # if the data is valid
     if serializer.is_valid():
@@ -90,10 +93,10 @@ def createPatient(request):
         serializer.save()
     # return the data in json format
 
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
-@api_view(['PATCH', 'PUT'])
+@ api_view(['PATCH', 'PUT'])
 def updatePatient(request, pk):
     # get the data from the Patient model
     try:
@@ -109,21 +112,22 @@ def updatePatient(request, pk):
         # save the data
         serializer.save()
     # return the data in json format
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
-@api_view(['GET'])
+@ api_view(['GET'])
+# @renderer_classes((JSONRenderer,))
 def getAppointment(request):
     # get all the data from the Appointment model
     appointment = Appointment.objects.all()
     # serialize the data
     serializer = AppointmentSerializer(appointment, many=True)
     # return the data in json format
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 #  TO DO validate the appointment
-@api_view(['POST'])
+@ api_view(['POST'])
 def createAppointment(request):
 
     if Doctor.objects.filter(id=request.data['doctor']).exists() == False:
@@ -143,11 +147,11 @@ def createAppointment(request):
         # save the data
         serializer.save()
     # return the data in json format
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
 # TO DO validate the appointment
-@api_view(['PATCH', 'PUT'])
+@ api_view(['PATCH', 'PUT'])
 def updateAppointment(request, pk):
     # get the data from the Appointment model
     try:
@@ -165,9 +169,10 @@ def updateAppointment(request, pk):
     else:
         return JsonResponse(serializer.errors, safe=False)
     # return the data in json format
-    return JsonResponse(serializer.data, safe=False)
+    return Response(serializer.data)
 
 
+@ api_view(['GET'])
 def getAdmin(request):
     # get all the data from the Admin model
     admin = Admin.objects.all()
@@ -177,6 +182,7 @@ def getAdmin(request):
     return Response(serializer.data)
 
 
+@ api_view(['POST'])
 def createAdmin(request):
     # serialize the data
     serializer = AdminSerializer(data=request.data)
@@ -188,6 +194,7 @@ def createAdmin(request):
     return Response(serializer.data)
 
 
+@ api_view(['PATCH', 'PUT'])
 def updateAdmin(request, pk):
     # get the data from the Admin model
     admin = Admin.objects.get(id=pk)

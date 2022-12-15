@@ -10,6 +10,8 @@ class Admin(models.Model):
     def __str__(self):
         return self.username
 
+# class Nurse()
+
 
 class Doctor(models.Model):
     name = models.CharField(max_length=100, null=False)
