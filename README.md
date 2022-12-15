@@ -2,8 +2,8 @@
 Assignment for Alpha health
 
 -BASIC SETUP 
--First clone the repo
--RUN pip install requirements.txt to install all the dependecies
+-[]First clone the repo
+-[]RUN pip install requirements.txt to install all the dependecies
 -RUN py manage.py makemigrations
 -RUN py manage.py migrate
 
