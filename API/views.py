@@ -189,7 +189,7 @@ def authAdmin(request):
     password = request.data['password']
     if Admin.objects.filter(username=username, password=password).exists():
         print("--------------------Authentication successful-----------------------")
-        return Response({'message': 'Valid credentials', "is": True})
+        return Response({'message': 'Valid credentials', "is": True, "username": username})
     else:
         return Response({'message': 'Invalid credentials', "is": False}, status=status.HTTP_400_BAD_REQUEST)
 
