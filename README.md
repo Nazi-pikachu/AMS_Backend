@@ -22,3 +22,4 @@
 
 #### API endpoints
 
+*<a href = "https://github.com/Nazi-pikachu/AMS_Backend/blob/37693601f4120f3b957b0b4e194e4f68a3311373/AMS.pdf">API endpoints</a>*
