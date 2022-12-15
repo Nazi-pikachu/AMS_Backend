@@ -13,3 +13,9 @@
 
  5. -Make sure you are in the root directory i.e the same directory as **manage.py**
  6. -RUN `py manage.py runserver`
+
+
+DataBase Diagram
+		ADMIN
+		DOCTOR(*FK*)<-------APPOINTMENT------------->(*FK*)PATIENT
+API endpoints
