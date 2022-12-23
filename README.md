@@ -1,7 +1,6 @@
 # AMS_Backend
 
-**Assignment for Alpha health(MojoCare)**
-
+**Assignment for Alpha health**
 _BASIC SETUP_
 
 - First clone the repo
@@ -26,7 +25,6 @@ _TO RUN THE APP_
 
     	ADMIN
     	DOCTOR(FK)<-------APPOINTMENT------------->(FK)PATIENT
-
 
 #### API endpoints
 
